@@ -1,5 +1,6 @@
 package com.epam.mjc.stage0;
 
+
 /**
  * Here are the tasks for working with the arrays.
  * <p>
@@ -11,7 +12,8 @@ public class ArrayTasks {
      * Return a String[] array that will list all the seasons of the year, starting with winter.
      */
     public String[] seasonsArray() {
-
+        String[] arr = new String[]{"Winter", "Spring", "Summer", "autumn"};
+        return arr;
     }
 
     /**
@@ -25,7 +27,11 @@ public class ArrayTasks {
      * length = 5  -> [1, 2, 3, 4, 5]
      */
     public int[] generateNumbers(int length) {
-
+        int[] arr = new int[length];
+        for (int i = 0; i < length; i++) {
+            arr[i] = i + 1;
+        }
+        return arr;
     }
 
     /**
@@ -37,7 +43,11 @@ public class ArrayTasks {
      * arr = [5, -3, -4] -> sum = -2
      */
     public int totalSum(int[] arr) {
-
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum = sum + arr[i];
+        }
+        return sum;
     }
 
     /**
@@ -50,7 +60,12 @@ public class ArrayTasks {
      * arr = [5, -3, -4],   number = 10    ->  -1
      */
     public int findIndexOfNumber(int[] arr, int number) {
-
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == number) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -63,7 +78,11 @@ public class ArrayTasks {
      * arr = ["pineapple", "apple", "pen"] -> ["pen", "apple", "pineapple"]
      */
     public String[] reverseArray(String[] arr) {
-
+        String[] newArr = new String[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            newArr[arr.length - i - 1] = arr[i];
+        }
+        return newArr;
     }
 
     /**
@@ -78,7 +97,21 @@ public class ArrayTasks {
      * arr = [1, 2]         -> [1, 2]
      */
     public int[] getOnlyPositiveNumbers(int[] arr) {
+        int[] newArr = new int[arr.length];
+        int t = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0) {
+                newArr[t] = arr[i];
+                t++;
+            }
+        }
+        int stopNumber = findIndexOfNumber(newArr, 0);
+        int[] result = new int[stopNumber];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = newArr[i];
+        }
 
+        return result;
     }
 
     /**
@@ -91,7 +124,60 @@ public class ArrayTasks {
      * arr = [[3, 1, 2,], [3,2]] -> [[2, 3], [1, 2, 3]]
      * arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
-    public int[][] sortRaggedArray(int[][] arr) {
+    public static int[][] sortRaggedArray(int[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                int[] temp;
+                if (arr[i].length < arr[j].length) {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = sortArray(arr[i]);
+
+        }
+
+        return arr;
 
     }
-}
+
+    public static int[] sortArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                int temp = 0;
+                if (arr[j] > arr[i]) {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
+    public static void main(String[] args) {
+        int[][] twoDimArray = new int[][]{{5,4}, {7}};
+
+        for (int i = 0; i < twoDimArray.length; i++) {  //идём по строкам
+            for (int j = 0; j < twoDimArray[i].length; j++) {//идём по столбцам
+                System.out.print(" " + twoDimArray[i][j] + " "); //вывод элемента
+            }
+            System.out.println();//перенос строки ради визуального сохранения табличной формы
+        }
+
+        System.out.println("------------------------");
+
+        int[][] twoSorted = sortRaggedArray(twoDimArray);
+
+        for (int i = 0; i < twoSorted.length; i++) {
+            for (int j = 0; j < twoSorted[i].length; j++) {
+                System.out.print(" " + twoSorted[i][j] + " ");
+            }
+            System.out.println();
+        }
+        }
+    }
+
