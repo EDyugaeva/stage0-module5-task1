@@ -125,30 +125,54 @@ public class ArrayTasks {
      * arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
     public static int[][] sortRaggedArray(int[][] arr) {
+
         for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr.length; j++) {
-                int[] temp;
-                if (arr[i].length < arr[j].length) {
-                    temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
+            for (int j = 0; j < arr[i].length; j++) {
+                System.out.print(" " + arr[i][j] + " ");
             }
+            System.out.println();
         }
         for (int i = 0; i < arr.length; i++) {
             arr[i] = sortArray(arr[i]);
-
         }
 
+        for (int left = 0; left < arr.length; left++) {
+            // Вытаскиваем значение элемента
+            int[] value = arr[left];
+            // Перемещаемся по элементам, которые перед вытащенным элементом
+            int i = left - 1;
+            for (; i >= 0; i--) {
+                // Если вытащили значение меньшее — передвигаем больший элемент дальше
+                if (value.length < arr[i].length) {
+                    arr[i + 1] = arr[i];
+                } else {
+                    // Если вытащенный элемент больше — останавливаемся
+                    break;
+                }
+            }
+            // В освободившееся место вставляем вытащенное значение
+            arr[i + 1] = value;
+        }
+
+
+        System.out.println("=====================");
+
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                System.out.print(" " + arr[i][j] + " ");
+            }
+            System.out.println();
+        }
         return arr;
 
     }
 
     public static int[] sortArray(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr.length; j++) {
+            for (int j = i + 1; j < arr.length; j++) {
                 int temp = 0;
-                if (arr[j] > arr[i]) {
+                if (arr[j] < arr[i]) {
                     temp = arr[i];
                     arr[i] = arr[j];
                     arr[j] = temp;
@@ -159,7 +183,7 @@ public class ArrayTasks {
     }
 
     public static void main(String[] args) {
-        int[][] twoDimArray = new int[][]{{5,4}, {7}};
+        int[][] twoDimArray = new int[][]{{5, 4}, {7}};
 
         for (int i = 0; i < twoDimArray.length; i++) {  //идём по строкам
             for (int j = 0; j < twoDimArray[i].length; j++) {//идём по столбцам
@@ -178,6 +202,6 @@ public class ArrayTasks {
             }
             System.out.println();
         }
-        }
     }
+}
 
